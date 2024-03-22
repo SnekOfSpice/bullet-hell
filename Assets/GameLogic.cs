@@ -17,9 +17,11 @@ public class GameLogic : MonoBehaviour
         
     }
 
-    public GameObject Shoot()
+    public GameObject Shoot(Transform player)
     {
         GameObject newBullet = Instantiate(bullet, transform);
+        newBullet.transform.position = player.transform.position;
+        newBullet.transform.rotation = player.transform.rotation;
         return newBullet;
     }
 }

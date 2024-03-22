@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
-        GameObject newBullet = gameLogic.GetComponent<GameLogic>().Shoot();
+        GameObject newBullet = gameLogic.GetComponent<GameLogic>().Shoot(this.transform);
         newBullet.GetComponent<Bullet>().isPlayerOwned = true;
         newBullet.GetComponent<Bullet>().direction = AngleFromMouseToPlayer() + 90;
     }

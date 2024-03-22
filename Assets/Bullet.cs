@@ -29,7 +29,10 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-        transform.position = Movement(timer);
+        //transform.position = Movement(timer);
+        var direction = transform.InverseTransformVector(new Vector3(0,1,0));
+        transform.position -= direction;
+
     }
 
     private Vector2 Movement(float timer)
