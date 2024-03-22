@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 20;
+    public GameObject gameLogic;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +33,40 @@ public class Player : MonoBehaviour
             MoveDir.x += 1;
         }
 
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            Shoot();
+        }
+        
+
         MoveDir = MoveDir.normalized;
         transform.position += MoveDir * moveSpeed * Time.deltaTime;
+        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, AngleFromMouseToPlayer() + 90));
+
+    }
+
+    void Shoot()
+    {
+        GameObject newBullet = gameLogic.GetComponent<GameLogic>().Shoot();
+        newBullet.GetComponent<Bullet>().isPlayerOwned = true;
+        newBullet.GetComponent<Bullet>().direction = AngleFromMouseToPlayer() + 90;
+    }
+
+    float AngleFromMouseToPlayer()
+    {
+        //Get the Screen positions of the object
+        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+
+        //Get the Screen position of the mouse
+        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
+        //Get the angle between the points
+        float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+        return angle;
+    }
+
+    float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
+    {
+        return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
     }
 }
