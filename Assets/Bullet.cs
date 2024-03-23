@@ -8,19 +8,21 @@ public class Bullet : MonoBehaviour
     public float speed = 10;
     public Vector2 direction;
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetIsPlayerOwned(bool value)
     {
-        GetComponent<CircleCollider2D>().radius = isPlayerOwned ? 1.2f : 0.9f;
+        isPlayerOwned = value;
+        GetComponent<CircleCollider2D>().radius = isPlayerOwned ? 0.12f : 0.09f;
+    }
 
-        Vector2 objPos = transform.position;//gets player position
-        Vector2 mousePos = Input.mousePosition;//gets mouse postion
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        direction = mousePos - objPos;
+    public void SetDirection(Vector2 from, Vector2 to)
+    {
+        transform.position = new Vector3(from.x, from.y);
+        direction = to - from;
     }
 
     private void Update()
     {
+        
         transform.position += new Vector3(direction.x, direction.y).normalized * Time.deltaTime * speed;
 
         if (Mathf.Abs(transform.position.x) > 11 || Mathf.Abs(transform.position.y) > 7)
@@ -28,5 +30,13 @@ public class Bullet : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        print(collision.name);
+        collision.gameObject.GetComponent<IDamagable>().HandleHit();
+        
+        if (collision.gameObject.layer == this.gameObject.layer) Destroy(this.gameObject);
     }
 }

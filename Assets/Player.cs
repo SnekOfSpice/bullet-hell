@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
     public float moveSpeed = 20;
     public GameObject gameLogic;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int health = 3;
 
     // Update is called once per frame
     void Update()
@@ -40,17 +37,22 @@ public class Player : MonoBehaviour
         
 
         MoveDir = MoveDir.normalized;
-        transform.position += MoveDir * moveSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, AngleFromMouseToPlayer() + 90));
+        Vector2 newPos = transform.position + MoveDir * moveSpeed * Time.deltaTime;
+        newPos.x = Mathf.Clamp(newPos.x, -8.88f, 8.88f);
+        newPos.y = Mathf.Clamp(newPos.y, -5f, 5f);
+        transform.position = newPos;
 
+        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, AngleFromMouseToPlayer() + 90));
     }
 
     void Shoot()
     {
-        GameObject newBullet = gameLogic.GetComponent<GameLogic>().Shoot(this.transform);
-        newBullet.GetComponent<Bullet>().isPlayerOwned = true;
-        newBullet.transform.position = transform.position;
-        newBullet.transform.rotation = transform.rotation;
+        Vector2 objPos = transform.position;//gets player position
+        Vector2 mousePos = Input.mousePosition;//gets mouse postion
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        GameObject newBullet = gameLogic.GetComponent<GameLogic>().Shoot(transform.position, mousePos);
+        newBullet.GetComponent<Bullet>().SetIsPlayerOwned(true);
+        newBullet.layer = LayerMask.NameToLayer("Enemy Hittable");
     }
 
     float AngleFromMouseToPlayer()
@@ -69,5 +71,16 @@ public class Player : MonoBehaviour
     float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
     {
         return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
+    }
+
+    public void HandleHit()
+    {
+        print("player hit " + health);
+        health -= 1;
+        if (health <= 0)
+        {
+            gameLogic.GetComponent<GameLogic>().GameOver();
+        }
+        
     }
 }

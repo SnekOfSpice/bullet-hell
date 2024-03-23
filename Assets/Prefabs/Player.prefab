@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 972377888267409748}
   - component: {fileID: 4916081700680470979}
   - component: {fileID: 7419825989842691295}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 8.81
+  gameLogic: {fileID: 0}
 --- !u!212 &7419825989842691295
 SpriteRenderer:
   m_ObjectHideFlags: 0
