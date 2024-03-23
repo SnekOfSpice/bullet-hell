@@ -6,39 +6,27 @@ public class Bullet : MonoBehaviour
 {
     public bool isPlayerOwned;
     public float speed = 10;
-    public float direction;
+    public Vector2 direction;
 
-    private float timer = 0f;
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<CircleCollider2D>().radius = isPlayerOwned ? 1.2f : 0.9f;
-    }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    Debug.Log(transform.rotation.eulerAngles);
-    //    Debug.Log(transform.position);
-    //    Vector3 a = new Vector3(1,0, 0);
-    //    Vector2 b = new Vector2((float)Mathf.Cos(Mathf.Deg2Rad(direction), (float)Mathf.Sin(radians));
-    //    //transform.position += a * speed * Time.deltaTime;
-    //    transform.position += transform.forward * Time.deltaTime * speed;
-    //}
+        Vector2 objPos = transform.position;//gets player position
+        Vector2 mousePos = Input.mousePosition;//gets mouse postion
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        direction = mousePos - objPos;
+    }
 
     private void Update()
     {
-        timer += Time.deltaTime;
-        //transform.position = Movement(timer);
-        var direction = transform.InverseTransformVector(new Vector3(0,1,0));
-        transform.position -= direction;
+        transform.position += new Vector3(direction.x, direction.y).normalized * Time.deltaTime * speed;
 
-    }
+        if (Mathf.Abs(transform.position.x) > 11 || Mathf.Abs(transform.position.y) > 7)
+        {
+            Destroy(this.gameObject);
+        }
 
-    private Vector2 Movement(float timer)
-    {
-        float x = timer * speed * transform.right.x;
-        float y = timer * speed * transform.right.y;
-        return new Vector2(x, y);
     }
 }

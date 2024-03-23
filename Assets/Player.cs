@@ -49,16 +49,17 @@ public class Player : MonoBehaviour
     {
         GameObject newBullet = gameLogic.GetComponent<GameLogic>().Shoot(this.transform);
         newBullet.GetComponent<Bullet>().isPlayerOwned = true;
-        newBullet.GetComponent<Bullet>().direction = AngleFromMouseToPlayer() + 90;
+        newBullet.transform.position = transform.position;
+        newBullet.transform.rotation = transform.rotation;
     }
 
     float AngleFromMouseToPlayer()
     {
         //Get the Screen positions of the object
-        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+        Vector2 positionOnScreen = transform.position;// Camera.main.WorldToViewportPoint(transform.position);
 
         //Get the Screen position of the mouse
-        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         //Get the angle between the points
         float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
