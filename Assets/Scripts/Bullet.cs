@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
 
         if (Mathf.Abs(transform.position.x) > 11 || Mathf.Abs(transform.position.y) > 7)
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
 
     }
@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.layer == this.gameObject.layer)
         {
             collision.gameObject.GetComponent<IDamagable>().HandleHit();
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
         
     }

@@ -592,7 +592,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96997a8cb842e484388a9b88809f056e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 7918227767312375116, guid: 9ff663a610e43874dbff7cb8f4742249, type: 3}
+  pooledObjects: []
+  objectToPool: {fileID: 7918227767312375116, guid: 9ff663a610e43874dbff7cb8f4742249, type: 3}
+  amountToPool: 20
   GameOverScreen: {fileID: 1435514074}
 --- !u!4 &472721506
 Transform:

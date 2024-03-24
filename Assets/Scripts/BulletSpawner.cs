@@ -32,7 +32,7 @@ public class BulletSpawner : MonoBehaviour
         }
         Vector3 playerPosition = player.transform.position;
         cooldown = TimeBetweenShots;
-        GameObject newBullet = gameLogic.GetComponent<GameLogic>().Shoot(transform.position, playerPosition);
+        GameObject newBullet = GameLogic.SharedInstance.Shoot(transform.position, playerPosition);
         newBullet.GetComponent<Bullet>().speed = BulletSpeed;
         newBullet.GetComponent<Bullet>().SetIsPlayerOwned(false);
         newBullet.layer = LayerMask.NameToLayer("Player Hittable");

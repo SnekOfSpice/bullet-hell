@@ -62,7 +62,7 @@ public class Player : MonoBehaviour, IDamagable
         Vector2 objPos = transform.position;//gets player position
         Vector2 mousePos = Input.mousePosition;//gets mouse postion
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        GameObject newBullet = gameLogic.GetComponent<GameLogic>().Shoot(transform.position, mousePos);
+        GameObject newBullet = GameLogic.SharedInstance.Shoot(transform.position, mousePos);
         newBullet.GetComponent<Bullet>().SetIsPlayerOwned(true);
         newBullet.layer = LayerMask.NameToLayer("Enemy Hittable");
         SoundFXManager.instance.PlaySoundFXClip(shootSoundClip, transform, 1f);
