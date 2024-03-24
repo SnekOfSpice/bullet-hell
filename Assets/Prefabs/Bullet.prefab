@@ -101,6 +101,7 @@ MonoBehaviour:
   isPlayerOwned: 0
   speed: 10
   direction: {x: 0, y: 0}
+  hurtSoundClip: {fileID: 8300000, guid: 7d838b778fc9f4543b32bfab6bd30454, type: 3}
 --- !u!58 &5831004763176307463
 CircleCollider2D:
   m_ObjectHideFlags: 0

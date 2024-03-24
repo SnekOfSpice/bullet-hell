@@ -92,6 +92,7 @@ public class Player : MonoBehaviour, IDamagable
         if (health <= 0)
         {
             gameLogic.GetComponent<GameLogic>().GameOver();
+            Destroy(this.gameObject);
         }
         
     }

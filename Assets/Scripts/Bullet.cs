@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public bool isPlayerOwned;
     public float speed = 10;
     public Vector2 direction;
+    [SerializeField] private AudioClip hurtSoundClip;
 
     public void SetIsPlayerOwned(bool value)
     {
@@ -38,7 +39,12 @@ public class Bullet : MonoBehaviour
         {
             collision.gameObject.GetComponent<IDamagable>().HandleHit();
             this.gameObject.SetActive(false);
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player Hittable"))
+            {
+                SoundFXManager.instance.PlaySoundFXClip(hurtSoundClip, transform, 1f);
+            }
         }
+        
         
     }
 }
